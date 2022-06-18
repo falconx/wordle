@@ -1,23 +1,23 @@
 {
-    "dev": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-wordle-dev-141519-authRole",
-            "UnauthRoleArn": "arn:aws:iam::609579152851:role/amplify-wordle-dev-141519-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::609579152851:role/amplify-wordle-dev-141519-authRole",
-            "Region": "eu-west-2",
-            "DeploymentBucketName": "amplify-wordle-dev-141519-deployment",
-            "UnauthRoleName": "amplify-wordle-dev-141519-unauthRole",
-            "StackName": "amplify-wordle-dev-141519",
-            "StackId": "arn:aws:cloudformation:eu-west-2:609579152851:stack/amplify-wordle-dev-141519/b42a7160-ef08-11ec-a427-0adcd984240e",
-            "AmplifyAppId": "d28ps2042fju87"
-        },
-        "categories": {
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "d28ps2042fju87",
-                    "type": "cicd"
-                }
-            }
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-wordle-dev-141519-authRole",
+      "UnauthRoleArn": "arn:aws:iam::609579152851:role/amplify-wordle-dev-141519-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::609579152851:role/amplify-wordle-dev-141519-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-wordle-dev-141519-deployment",
+      "UnauthRoleName": "amplify-wordle-dev-141519-unauthRole",
+      "StackName": "amplify-wordle-dev-141519",
+      "StackId": "arn:aws:cloudformation:eu-west-2:609579152851:stack/amplify-wordle-dev-141519/b42a7160-ef08-11ec-a427-0adcd984240e",
+      "AmplifyAppId": "d28ps2042fju87"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d28ps2042fju87",
+          "type": "cicd"
         }
+      }
     }
+  }
 }

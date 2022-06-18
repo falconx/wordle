@@ -142,7 +142,7 @@ const replaceAt = (string: string, index: number, replacement: string) => {
 //   ['X', 'C', 'V', 'B', 'N', 'M'],
 // ];
 
-const potentialWords = words.filter(word => word.length === CHAR_COUNT);
+const potentialWords = (words as string[]).filter(word => word.length === CHAR_COUNT);
 
 const getSolution = () => {
   const storage = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
@@ -258,6 +258,7 @@ const Game = () => {
 
       {gameId && (
         <Box
+          // @ts-ignore
           position="absolute"
           top={0}
           left={0}
@@ -269,11 +270,13 @@ const Game = () => {
       )}
 
       <Box
+        // @ts-ignore
         mx="auto"
         mt={100}
         width={(SIZE * CHAR_COUNT) + (10 * (CHAR_COUNT - 1))}
       >
         <Box
+          // @ts-ignore
           key={attempts}
           display="flex"
           flexDirection="column"
@@ -286,6 +289,7 @@ const Game = () => {
             return (
               <Box
                 key={rowIndex}
+                // @ts-ignore
                 display="flex"
                 gap={10}
               >
@@ -297,6 +301,7 @@ const Game = () => {
                   return (
                     <Box
                       key={columnIndex}
+                      // @ts-ignore
                       height={SIZE}
                       width={SIZE}
                     >
@@ -321,6 +326,7 @@ const Game = () => {
         </Box>
 
         <Box
+          // @ts-ignore
           display="flex"
           justifyContent="flex-end"
           gap={10}
@@ -382,7 +388,10 @@ const Game = () => {
         isOpen={showJoinModal}
         onRequestClose={() => setShowJoinModal(false)}
       >
-        <Box position="relative">
+        <Box
+          // @ts-ignore
+          position="relative"
+        >
           <label htmlFor="code">Enter join code: </label>
 
           <Input
@@ -394,6 +403,7 @@ const Game = () => {
           />
 
           <Box
+            // @ts-ignore
             display="flex"
             gap={10}
             mt={20}
