@@ -4,6 +4,11 @@ import { Global, css } from '@emotion/react'
 import random from 'lodash/random';
 import isUndefined from 'lodash/isUndefined';
 import Modal from 'react-modal';
+import { API, graphqlOperation } from 'aws-amplify';
+import { Observable } from 'zen-observable-ts';
+
+// import { OnAttemptWordSubscription } from '../API';
+import * as subscriptions from '../graphql/subscriptions';
 
 import Box from './Box';
 
@@ -222,6 +227,26 @@ const Game = () => {
 
   useEffect(() => {
     setSolution(getSolution());
+
+    // subscribe to attempts
+    const initSubscriptions = async () => {
+      // RE use of *any* type https://github.com/aws-amplify/amplify-js/issues/7589
+      const onAttemptWordSubscription = (await API.graphql(
+        graphqlOperation(subscriptions.onAttemptWord)
+      )) as Observable<any>;
+      
+      onAttemptWordSubscription.subscribe({
+        next: ({ value }) => {
+          setAttempts((prevState) => [
+            ...prevState,
+            value.data.onAttempt,
+          ]);
+        },
+        error: (error) => console.warn(error),
+      });
+    };
+
+    initSubscriptions();
   }, []);
 
   useEffect(() => {

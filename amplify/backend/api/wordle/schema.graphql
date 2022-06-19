@@ -1,0 +1,60 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+# type Game @model {
+#   id: ID!
+#   name: String!
+#   description: String
+# }
+
+enum Status {
+  CORRECT,
+  INCORRECT,
+  INCORRECT_LOCATION,
+  INVALID
+}
+
+type Game @model {
+  id: ID!
+  host: Player!
+  challenger: Player!
+  attemps: [Attempt!]
+}
+
+type Attempt @model {
+  id: ID!
+  word: String!
+  status: [Status!]!
+}
+
+type Player @model {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  getGameById(id: ID!): Game
+}
+
+input CreateNewGameInput {
+  id: ID
+  hostId: ID!
+  challengerId: ID!
+}
+
+input AttemptWordInput {
+  id: ID
+  playerId: ID!
+  word: String!
+}
+
+type Mutation {
+  createNewGame(input: CreateNewGameInput!): Game
+  attemptWord(input: AttemptWordInput!): Attempt
+}
+
+type Subscription {
+  onCreateNewGame: Game @aws_subscribe(mutations: ["createNewGame"])
+  onAttemptWord: Attempt @aws_subscribe(mutations: ["attemptWord"])
+}

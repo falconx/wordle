@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "wordle",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/mattlayt/Dev/wordle/amplify/backend/api/wordle/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    }
+  }
+}
