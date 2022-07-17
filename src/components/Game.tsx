@@ -7,8 +7,12 @@ import Modal from 'react-modal';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Observable } from 'zen-observable-ts';
 
-// import { OnAttemptWordSubscription } from '../API';
+import {
+  CreateGameMutation,
+  // OnAttemptWordSubscription,
+} from '../API';
 import * as subscriptions from '../graphql/subscriptions';
+import { createNewGame } from '../graphql/mutations';
 
 import Box from './Box';
 
@@ -222,7 +226,25 @@ const Game = () => {
     !isInvalidWord &&
     !isSuccess;
   
-  const createGame = () => {};
+  const createGame = async () => {
+    const response = (await API.graphql({
+      query: createNewGame,
+      variables: {
+        input: {
+          hostId: 1,
+          challengerId: 2,
+        },
+      },
+    }) as { data: CreateGameMutation; errors: any[] });
+
+    if (response.errors) {
+      console.warn(response.errors);
+    } else {
+      const gameId = response.data.createGame.id;
+      console.log('new game created', gameId);
+    }
+  };
+
   const joinGame = () => {};
 
   useEffect(() => {
@@ -247,6 +269,9 @@ const Game = () => {
     };
 
     initSubscriptions();
+
+    // TODO: unsubscribe onAttemptWordSubscription
+    // https://rajeshnaroth.medium.com/writing-a-react-hook-to-cancel-promises-when-a-component-unmounts-526efabf251f
   }, []);
 
   useEffect(() => {
@@ -263,9 +288,9 @@ const Game = () => {
     }
   }, [attempts]);
 
-  useEffect(() => {
-    setAttempts([]);
-  }, [solution]);
+  // useEffect(() => {
+  //   setAttempts([]);
+  // }, [solution]);
 
   // const reset = () => {
   //   setSolution(getSolution());

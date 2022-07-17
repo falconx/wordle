@@ -19,7 +19,7 @@ type Game @model {
   id: ID!
   host: Player!
   challenger: Player!
-  attemps: [Attempt!]
+  attempts: [Attempt!]
 }
 
 type Attempt @model {

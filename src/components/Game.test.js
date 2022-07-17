@@ -16,7 +16,7 @@ it.todo('cannot submit without entering all characters'); // ✓
 
 it.todo('triggers success after providing the correct word');
 
-it.todo('triggers failure after guessing all attemps incorrectly');
+it.todo('triggers failure after guessing all attempts incorrectly');
 
 // it.todo('auto focuses next input field');
 
