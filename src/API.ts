@@ -13,11 +13,9 @@ export type Game = {
   id: string,
   host: Player,
   challenger: Player,
-  attempts?: ModelAttemptConnection | null,
+  attempts?:  Array<Attempt > | null,
   createdAt: string,
   updatedAt: string,
-  gameHostId: string,
-  gameChallengerId: string,
 };
 
 export type Player = {
@@ -28,12 +26,6 @@ export type Player = {
   updatedAt: string,
 };
 
-export type ModelAttemptConnection = {
-  __typename: "ModelAttemptConnection",
-  items:  Array<Attempt | null >,
-  nextToken?: string | null,
-};
-
 export type Attempt = {
   __typename: "Attempt",
   id: string,
@@ -41,7 +33,6 @@ export type Attempt = {
   status: Array< Status >,
   createdAt: string,
   updatedAt: string,
-  gameAttemptsId?: string | null,
 };
 
 export enum Status {
@@ -60,19 +51,37 @@ export type AttemptWordInput = {
 
 export type CreateGameInput = {
   id?: string | null,
-  gameHostId: string,
-  gameChallengerId: string,
 };
 
 export type ModelGameConditionInput = {
   and?: Array< ModelGameConditionInput | null > | null,
   or?: Array< ModelGameConditionInput | null > | null,
   not?: ModelGameConditionInput | null,
-  gameHostId?: ModelIDInput | null,
-  gameChallengerId?: ModelIDInput | null,
 };
 
-export type ModelIDInput = {
+export type UpdateGameInput = {
+  id: string,
+};
+
+export type DeleteGameInput = {
+  id: string,
+};
+
+export type CreateAttemptInput = {
+  id?: string | null,
+  word: string,
+  status: Array< Status >,
+};
+
+export type ModelAttemptConditionInput = {
+  word?: ModelStringInput | null,
+  status?: ModelStatusInput | null,
+  and?: Array< ModelAttemptConditionInput | null > | null,
+  or?: Array< ModelAttemptConditionInput | null > | null,
+  not?: ModelAttemptConditionInput | null,
+};
+
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -112,48 +121,6 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type UpdateGameInput = {
-  id: string,
-  gameHostId?: string | null,
-  gameChallengerId?: string | null,
-};
-
-export type DeleteGameInput = {
-  id: string,
-};
-
-export type CreateAttemptInput = {
-  id?: string | null,
-  word: string,
-  status: Array< Status >,
-  gameAttemptsId?: string | null,
-};
-
-export type ModelAttemptConditionInput = {
-  word?: ModelStringInput | null,
-  status?: ModelStatusInput | null,
-  and?: Array< ModelAttemptConditionInput | null > | null,
-  or?: Array< ModelAttemptConditionInput | null > | null,
-  not?: ModelAttemptConditionInput | null,
-  gameAttemptsId?: ModelIDInput | null,
-};
-
-export type ModelStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type ModelStatusInput = {
   eq?: Status | null,
   ne?: Status | null,
@@ -163,7 +130,6 @@ export type UpdateAttemptInput = {
   id: string,
   word?: string | null,
   status?: Array< Status > | null,
-  gameAttemptsId?: string | null,
 };
 
 export type DeleteAttemptInput = {
@@ -196,8 +162,22 @@ export type ModelGameFilterInput = {
   and?: Array< ModelGameFilterInput | null > | null,
   or?: Array< ModelGameFilterInput | null > | null,
   not?: ModelGameFilterInput | null,
-  gameHostId?: ModelIDInput | null,
-  gameChallengerId?: ModelIDInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
 };
 
 export type ModelGameConnection = {
@@ -213,7 +193,12 @@ export type ModelAttemptFilterInput = {
   and?: Array< ModelAttemptFilterInput | null > | null,
   or?: Array< ModelAttemptFilterInput | null > | null,
   not?: ModelAttemptFilterInput | null,
-  gameAttemptsId?: ModelIDInput | null,
+};
+
+export type ModelAttemptConnection = {
+  __typename: "ModelAttemptConnection",
+  items:  Array<Attempt | null >,
+  nextToken?: string | null,
 };
 
 export type ModelPlayerFilterInput = {
@@ -252,14 +237,16 @@ export type CreateNewGameMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -275,7 +262,6 @@ export type AttemptWordMutation = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 
@@ -302,14 +288,16 @@ export type CreateGameMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -336,14 +324,16 @@ export type UpdateGameMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -370,14 +360,16 @@ export type DeleteGameMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -394,7 +386,6 @@ export type CreateAttemptMutation = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 
@@ -411,7 +402,6 @@ export type UpdateAttemptMutation = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 
@@ -428,7 +418,6 @@ export type DeleteAttemptMutation = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 
@@ -499,14 +488,16 @@ export type GetGameByIdQuery = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -532,14 +523,16 @@ export type GetGameQuery = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -557,8 +550,6 @@ export type ListGamesQuery = {
       id: string,
       createdAt: string,
       updatedAt: string,
-      gameHostId: string,
-      gameChallengerId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -576,7 +567,6 @@ export type GetAttemptQuery = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 
@@ -596,7 +586,6 @@ export type ListAttemptsQuery = {
       status: Array< Status >,
       createdAt: string,
       updatedAt: string,
-      gameAttemptsId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -654,14 +643,16 @@ export type OnCreateNewGameSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -673,7 +664,6 @@ export type OnAttemptWordSubscription = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 
@@ -695,14 +685,16 @@ export type OnCreateGameSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -724,14 +716,16 @@ export type OnUpdateGameSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -753,14 +747,16 @@ export type OnDeleteGameSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    attempts?:  {
-      __typename: "ModelAttemptConnection",
-      nextToken?: string | null,
-    } | null,
+    attempts?:  Array< {
+      __typename: "Attempt",
+      id: string,
+      word: string,
+      status: Array< Status >,
+      createdAt: string,
+      updatedAt: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
-    gameHostId: string,
-    gameChallengerId: string,
   } | null,
 };
 
@@ -772,7 +768,6 @@ export type OnCreateAttemptSubscription = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 
@@ -784,7 +779,6 @@ export type OnUpdateAttemptSubscription = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 
@@ -796,7 +790,6 @@ export type OnDeleteAttemptSubscription = {
     status: Array< Status >,
     createdAt: string,
     updatedAt: string,
-    gameAttemptsId?: string | null,
   } | null,
 };
 

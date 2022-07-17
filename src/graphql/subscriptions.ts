@@ -19,12 +19,14 @@ export const onCreateNewGame = /* GraphQL */ `
         updatedAt
       }
       attempts {
-        nextToken
+        id
+        word
+        status
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      gameHostId
-      gameChallengerId
     }
   }
 `;
@@ -36,7 +38,6 @@ export const onAttemptWord = /* GraphQL */ `
       status
       createdAt
       updatedAt
-      gameAttemptsId
     }
   }
 `;
@@ -57,12 +58,14 @@ export const onCreateGame = /* GraphQL */ `
         updatedAt
       }
       attempts {
-        nextToken
+        id
+        word
+        status
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      gameHostId
-      gameChallengerId
     }
   }
 `;
@@ -83,12 +86,14 @@ export const onUpdateGame = /* GraphQL */ `
         updatedAt
       }
       attempts {
-        nextToken
+        id
+        word
+        status
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      gameHostId
-      gameChallengerId
     }
   }
 `;
@@ -109,12 +114,14 @@ export const onDeleteGame = /* GraphQL */ `
         updatedAt
       }
       attempts {
-        nextToken
+        id
+        word
+        status
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      gameHostId
-      gameChallengerId
     }
   }
 `;
@@ -126,7 +133,6 @@ export const onCreateAttempt = /* GraphQL */ `
       status
       createdAt
       updatedAt
-      gameAttemptsId
     }
   }
 `;
@@ -138,7 +144,6 @@ export const onUpdateAttempt = /* GraphQL */ `
       status
       createdAt
       updatedAt
-      gameAttemptsId
     }
   }
 `;
@@ -150,7 +155,6 @@ export const onDeleteAttempt = /* GraphQL */ `
       status
       createdAt
       updatedAt
-      gameAttemptsId
     }
   }
 `;

@@ -19,12 +19,14 @@ export const getGameById = /* GraphQL */ `
         updatedAt
       }
       attempts {
-        nextToken
+        id
+        word
+        status
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      gameHostId
-      gameChallengerId
     }
   }
 `;
@@ -45,12 +47,14 @@ export const getGame = /* GraphQL */ `
         updatedAt
       }
       attempts {
-        nextToken
+        id
+        word
+        status
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      gameHostId
-      gameChallengerId
     }
   }
 `;
@@ -65,8 +69,6 @@ export const listGames = /* GraphQL */ `
         id
         createdAt
         updatedAt
-        gameHostId
-        gameChallengerId
       }
       nextToken
     }
@@ -80,7 +82,6 @@ export const getAttempt = /* GraphQL */ `
       status
       createdAt
       updatedAt
-      gameAttemptsId
     }
   }
 `;
@@ -97,7 +98,6 @@ export const listAttempts = /* GraphQL */ `
         status
         createdAt
         updatedAt
-        gameAttemptsId
       }
       nextToken
     }
