@@ -4,15 +4,15 @@ import { Global, css } from '@emotion/react'
 import random from 'lodash/random';
 import isUndefined from 'lodash/isUndefined';
 import Modal from 'react-modal';
-import { API, graphqlOperation } from 'aws-amplify';
-import { Observable } from 'zen-observable-ts';
+// import { API, graphqlOperation } from 'aws-amplify';
+// import { Observable } from 'zen-observable-ts';
 
-import {
-  CreateGameMutation,
-  // OnAttemptWordSubscription,
-} from '../API';
-import * as subscriptions from '../graphql/subscriptions';
-import { createNewGame } from '../graphql/mutations';
+// import {
+//   CreateGameMutation,
+//   // OnAttemptWordSubscription,
+// } from '../API';
+// import * as subscriptions from '../graphql/subscriptions';
+// import { createNewGame } from '../graphql/mutations';
 
 import Box from './Box';
 
@@ -227,22 +227,22 @@ const Game = () => {
     !isSuccess;
   
   const createGame = async () => {
-    const response = (await API.graphql({
-      query: createNewGame,
-      variables: {
-        input: {
-          hostId: 1,
-          challengerId: 2,
-        },
-      },
-    }) as { data: CreateGameMutation; errors: any[] });
+    // const response = (await API.graphql({
+    //   query: createNewGame,
+    //   variables: {
+    //     input: {
+    //       hostId: 1,
+    //       challengerId: 2,
+    //     },
+    //   },
+    // }) as { data: CreateGameMutation; errors: any[] });
 
-    if (response.errors) {
-      console.warn(response.errors);
-    } else {
-      const gameId = response.data.createGame.id;
-      console.log('new game created', gameId);
-    }
+    // if (response.errors) {
+    //   console.warn(response.errors);
+    // } else {
+    //   const gameId = response.data.createGame.id;
+    //   console.log('new game created', gameId);
+    // }
   };
 
   const joinGame = () => {};
@@ -251,24 +251,24 @@ const Game = () => {
     setSolution(getSolution());
 
     // subscribe to attempts
-    const initSubscriptions = async () => {
-      // RE use of *any* type https://github.com/aws-amplify/amplify-js/issues/7589
-      const onAttemptWordSubscription = (await API.graphql(
-        graphqlOperation(subscriptions.onAttemptWord)
-      )) as Observable<any>;
+    // const initSubscriptions = async () => {
+    //   // RE use of *any* type https://github.com/aws-amplify/amplify-js/issues/7589
+    //   const onAttemptWordSubscription = (await API.graphql(
+    //     graphqlOperation(subscriptions.onAttemptWord)
+    //   )) as Observable<any>;
       
-      onAttemptWordSubscription.subscribe({
-        next: ({ value }) => {
-          setAttempts((prevState) => [
-            ...prevState,
-            value.data.onAttempt,
-          ]);
-        },
-        error: (error) => console.warn(error),
-      });
-    };
+    //   onAttemptWordSubscription.subscribe({
+    //     next: ({ value }) => {
+    //       setAttempts((prevState) => [
+    //         ...prevState,
+    //         value.data.onAttempt,
+    //       ]);
+    //     },
+    //     error: (error) => console.warn(error),
+    //   });
+    // };
 
-    initSubscriptions();
+    // initSubscriptions();
 
     // TODO: unsubscribe onAttemptWordSubscription
     // https://rajeshnaroth.medium.com/writing-a-react-hook-to-cancel-promises-when-a-component-unmounts-526efabf251f
