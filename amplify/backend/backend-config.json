@@ -6,23 +6,6 @@
       "lastPushTimeStamp": "2022-06-18T13:33:50.042Z"
     }
   },
-  "api": {
-    "wordle": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
-            }
-          },
-          "additionalAuthenticationProviders": []
-        }
-      }
-    }
-  },
+  "api": {},
   "function": {}
 }
